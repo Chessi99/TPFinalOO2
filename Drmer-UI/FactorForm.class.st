@@ -110,7 +110,8 @@ graphic := aGraphic
 { #category : #initialization }
 FactorForm >> initializePresenter [
 	
-	self submitButton action: [graphic addFactorWithAttribute:'time'  element: 'time-to-marker'].	
+	self submitButton action: [graphic addFactorWithAttribute: (self attributeTextInput text)  element:(self elementTextInput text) isExternal:(self isExternalInput state).
+		].	
 ]
 
 { #category : #initialization }
@@ -124,7 +125,7 @@ FactorForm >> initializeWidgets [
 	elementTextInput ghostText: 'empty'.
 	
 	isExternaLabel := self newLabel label: 'isExternal'.
-	isExternalInput := self newCheckBox state: true.
+	isExternalInput := self newCheckBox state: false.
 
 	submitButton := self newButton label: 'Submit'.
 	

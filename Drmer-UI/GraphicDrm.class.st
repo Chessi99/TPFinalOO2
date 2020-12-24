@@ -13,15 +13,29 @@ GraphicDrm >> addFactor:aFactor [
 ]
 
 { #category : #adding }
-GraphicDrm >> addFactorWithAttribute:attribute element:element [
-|newFactor factor|
-	newFactor:= drmBuilder factorOnAttribute: attribute of: element.
-	factor := RSGroup new.
-	factor add: (RSEllipse new size: 30; model: newFactor ; color:((Color gray alpha: 0.5))   ).
-	factor add: (RSLabel new text:'text'; fontSize:5; color: 'black'  ). 
-	(factor asShapeFor: newFactor  )@ RSPopup @ RSDraggable.
+GraphicDrm >> addFactorWithAttribute:attribute element:element isExternal:external [
+"Este metodo podria instanciar solo el elemento y llamar a un metodo privado que lo agregue al grafico"
+|newFactor factor elipse border|
+	newFactor:= (drmBuilder factorOnAttribute: attribute of: element )isExternal:external.
+	border:=(RSBorder new color:'black' ).
+	external ifTrue: [ border dashArray: #(4)  ].
 	
-	canvas add: factor asShape .
+	elipse:=(RSEllipse new) 
+		border:border;
+		size: 30;
+		model: newFactor ; 
+		color:(Color white alpha: 0.5).
+		
+	
+	factor := RSGroup new.
+		factor add: elipse.
+		factor add: (RSLabel new text: 
+						(attribute ,' of ',element ); 
+						fontSize:5; color: 'black'  ).
+						 
+   canvas add: 	(factor asShapeFor: newFactor  )@ RSPopup @ RSDraggable.
+	canvas  @ RSCanvasController.
+
 
 ]
 
