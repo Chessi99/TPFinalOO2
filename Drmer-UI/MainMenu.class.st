@@ -6,6 +6,7 @@ Class {
 		'buttonAddLink',
 		'buttonModifiedFactor',
 		'buttonModifiedLink',
+		'buttonOpenGaph',
 		'screen',
 		'graphic'
 	],
@@ -20,7 +21,8 @@ MainMenu class >> defaultSpec [
 				add: #buttonAddFactor;
 				add: #buttonAddLink;
 				add: #buttonModifiedFactor;
-				add: #buttonModifiedLink]
+				add: #buttonModifiedLink;
+				add: #buttonOpenGaph ]
 			origin: 0 @ 0
 			corner: 1 @ 0.7;
 		newRow: [ :row | row add: #screen ] origin: 0 @ 0.7 corner: 1 @ 1;
@@ -67,6 +69,16 @@ MainMenu >> buttonModifiedLink: anObject [
 	buttonModifiedLink := anObject
 ]
 
+{ #category : #accessing }
+MainMenu >> buttonOpenGaph [
+	^ buttonOpenGaph
+]
+
+{ #category : #accessing }
+MainMenu >> buttonOpenGaph: anObject [
+	buttonOpenGaph := anObject
+]
+
 { #category : #api }
 MainMenu >> extent [
 	^ 400 @ 100
@@ -76,7 +88,7 @@ MainMenu >> extent [
 MainMenu >> initialize [ 
 	super initialize.
 	graphic := GraphicDrm new.
-	graphic reload.
+
 ]
 
 { #category : #initialization }
@@ -88,7 +100,9 @@ MainMenu >> initializePresenter [
 											].
 	buttonAddLink  action: [ screen label: buttonAddLink  label ].
 	buttonModifiedFactor  action: [ screen label: buttonModifiedFactor  label ].
-	buttonModifiedLink   action: [ screen label: buttonModifiedLink  label ]
+	buttonModifiedLink   action: [ screen label: buttonModifiedLink  label ].
+	buttonOpenGaph  action: [ graphic open]
+	
 ]
 
 { #category : #initialization }
@@ -98,19 +112,22 @@ MainMenu >> initializeWidgets [
 	buttonAddLink := self newButton.
 	buttonModifiedFactor := self newButton.
 	buttonModifiedLink := self newButton.
+	buttonOpenGaph := self newButton .
 	"widget configuration"
-	screen label: 'Please give us your feedback.'.
+	screen label: 'DRM MENU.'.
 	buttonAddFactor label: 'Add Factor'.
 	buttonAddLink label: 'Add Link'.
 	buttonModifiedFactor label: 'Modified Factor'.
 	buttonModifiedLink label: 'Modified Link'.
+	buttonOpenGaph label: 'Open Graph'.
 
 	"specification of order of focus"
 	self focusOrder
 		add: buttonAddFactor ;
 		add: buttonAddLink ;
 		add: buttonModifiedFactor;
-		add: buttonModifiedLink 
+		add: buttonModifiedLink;
+		add: buttonOpenGaph 
 ]
 
 { #category : #accessing }

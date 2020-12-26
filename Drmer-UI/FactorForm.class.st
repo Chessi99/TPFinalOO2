@@ -9,7 +9,8 @@ Class {
 		'elementTextInput',
 		'isExternaLabel',
 		'isExternalInput',
-		'submitButton'
+		'submitButton',
+		'screen'
 	],
 	#category : #'Drmer-UI'
 }
@@ -21,45 +22,38 @@ FactorForm class >> create: aGraphic [
 
 { #category : #specs }
 FactorForm class >> defaultSpec [
-
 	<spec: #default>
-
 	| fontWidth labelsWidth rowHeight checkboxWidth |
-	fontWidth := (StandardFonts defaultFont widthOfString: 'M').
-	labelsWidth := fontWidth * 8.
+	fontWidth := StandardFonts defaultFont widthOfString: 'M'.
+	labelsWidth := fontWidth * 5.
 	rowHeight := self inputTextHeight.
-	checkboxWidth := fontWidth * 2.
-	
+	checkboxWidth := fontWidth * 1.
 	^ SpecLayout composed
 		newColumn: [ :col | 
-
-			col newRow: [ :row | 
-				row add: #attributeLabel right: labelsWidth.
-				row add: #attributeTextInput ]
-			height: rowHeight.
-		
-			col newRow: [ :row | 
-				row add: #elementLabel right: labelsWidth.
-				row add: #elementTextInput ]
-			height: rowHeight.
-
-
-		col newRow: [ :row | 
-						row  add: #isExternalInput right: checkboxWidth.
-						row add: #isExternaLabel ]
-			height: rowHeight*2.
-
-
-
-
-	col newRow: [ :row | 
-				row add: #submitButton.]
-			height: rowHeight*1.3.
-
-		"fill the rest of the space"
-		col newRow: [ :row |  ] ];
+			col
+				newRow: [ :row | 
+					row add: #attributeLabel right: labelsWidth.
+					row add: #attributeTextInput ]
+				height: rowHeight .
+			col
+				newRow: [ :row | 
+					row add: #elementLabel right: labelsWidth.
+					row add: #elementTextInput ]
+				height: rowHeight.
+			col
+				newRow: [ :row | 
+					row add: #isExternalInput right: checkboxWidth.
+					row add: #isExternaLabel ]
+				height: rowHeight * 3.
+			col
+				newRow: [ :row | row add: #submitButton ] 
+				height: rowHeight * 1.3.
 			
-		yourself.	
+			
+		]
+		origin: 0 @ 0.12 corner: 1 @ 0.9;	
+		
+	yourself
 ]
 
 { #category : #accessing }
