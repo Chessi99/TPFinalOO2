@@ -44,6 +44,11 @@ GraphicDrm >> addFactorWithAttribute:attribute element:element isExternal:extern
 
 ]
 
+{ #category : #accessing }
+GraphicDrm >> factorEllipses [
+	^ factorEllipses
+]
+
 { #category : #initialization }
 GraphicDrm >> initialize [
 	factorEllipses := OrderedCollection new.
