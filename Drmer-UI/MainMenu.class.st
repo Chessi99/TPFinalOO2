@@ -100,7 +100,7 @@ MainMenu >> initializePresenter [
 											].
 	buttonAddLink  action: [ 
 		screen label: buttonAddLink  label.
-		(LinkForm create: (graphic factorEllipses collect: [:factor | factor model])) openWithSpec .	
+		(LinkForm create: graphic ) openWithSpec .	
 	].
 	buttonModifiedFactor  action: [ screen label: buttonModifiedFactor  label ].
 	buttonModifiedLink   action: [ screen label: buttonModifiedLink  label ].

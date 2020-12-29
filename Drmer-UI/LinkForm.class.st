@@ -2,6 +2,9 @@ Class {
 	#name : #LinkForm,
 	#superclass : #ComposablePresenter,
 	#instVars : [
+		'link',
+		'action',
+		'graphic',
 		'factors',
 		'listOrigin',
 		'listDestination',
@@ -13,17 +16,22 @@ Class {
 		'levelDestination',
 		'levelItems',
 		'labelSources',
-		'sources',
+		'references',
 		'submitButton',
-		'addSourceButton'
+		'addSourceButton',
+		'buttonAssumption',
+		'buttonExperience',
+		'buttonOwn',
+		'buttonUnknown',
+		'buttonReference'
 	],
 	#category : #'Drmer-UI'
 }
 
 { #category : #'as yet unclassified' }
-LinkForm class >> create: factors [
+LinkForm class >> create: graphic [
 
-^(self new)factors: factors .
+^(self new)graphic: graphic .
 ]
 
 { #category : #specs }
@@ -53,6 +61,14 @@ LinkForm class >> defaultSpec [
 						yourself.
 					].
 			c
+			newRow: [ :row | 
+				row add: #buttonAssumption .
+				row add: #buttonExperience .
+				row add: #buttonOwn .
+				row add: #buttonUnknown.
+				row add: #buttonReference ]
+			height: 40.
+			c
 			newRow: [:row |
 				row add: #addSourceButton .
 				row add: #submitButton 
@@ -63,14 +79,44 @@ LinkForm class >> defaultSpec [
 		]
 ]
 
+{ #category : #initialization }
+LinkForm >> addReferenceWithCitation:citation label:label [ 
+	references add: (DrmReference labeled: label citation:citation) 
+]
+
 { #category : #accessing }
 LinkForm >> addSourceButton [
 	^ addSourceButton
 ]
 
+{ #category : #'as yet unclassified' }
+LinkForm >> assumption [
+	graphic sourceAssumption: link
+]
+
 { #category : #accessing }
-LinkForm >> addSourceButton: anObject [
-	addSourceButton := anObject
+LinkForm >> buttonAssumption [
+	^ buttonAssumption
+]
+
+{ #category : #accessing }
+LinkForm >> buttonExperience [
+	^ buttonExperience
+]
+
+{ #category : #accessing }
+LinkForm >> buttonOwn [
+	^ buttonOwn
+]
+
+{ #category : #accessing }
+LinkForm >> buttonReference [
+	^ buttonReference
+]
+
+{ #category : #accessing }
+LinkForm >> buttonUnknown [
+	^ buttonUnknown
 ]
 
 { #category : #accessing }
@@ -78,23 +124,39 @@ LinkForm >> destinationLabel [
 	^ destinationLabel
 ]
 
+{ #category : #'as yet unclassified' }
+LinkForm >> experience [
+	graphic sourceExperience: link
+]
+
 { #category : #accessing }
-LinkForm >> destinationLabel: anObject [
-	destinationLabel := anObject
+LinkForm >> factors [
+	^ factors
 ]
 
 { #category : #accessing }
 LinkForm >> factors: allFactors [
-	factors := allFactors collect: [ :factor | (factor attribute , ' of ' , factor element) ].
-	listOrigin items: factors .
-	listDestination items: factors .
+	factors:= Dictionary new.
+	allFactors do:[ :factor | factors at:(factor model attribute , ' of ' , factor model element) put: factor].
+	"factors := allFactors collect: [ :factor | (factor attribute , of  , factor element) ]."
+	
+	listOrigin items: factors keys .
+	listDestination items: factors keys.
 	listOrigin refreshListItems .
 	listDestination  refreshListItems  .
 ]
 
+{ #category : #accessing }
+LinkForm >> graphic:aGraphic [
+	graphic := aGraphic .
+	"self factors: (graphic factorEllipses collect: [:factor | factor model])"
+	self factors: graphic factorEllipses 
+]
+
 { #category : #initialization }
 LinkForm >> initialize [
-	
+	action:= #assumption.
+	references := OrderedCollection new.
 	factors:=OrderedCollection new .
 	levelItems:= OrderedCollection with:1 with:-1  with: 0.
 	super initialize.
@@ -103,15 +165,44 @@ LinkForm >> initialize [
 { #category : #initialization }
 LinkForm >> initializePresenter [
 	
-'	self submitButton action: [].	
+	self submitButton action: [ 
+		link:= graphic addLink: (factors at:listOrigin selectedItem) 
+					destination:(factors at: listDestination selectedItem) 
+					levelOrigin:levelOrigin selectedItem 
+					levelDestination:levelDestination selectedItem.
+		self perform: action.
+		graphic drawLink: link
+		].	
 	
-	self addSourceButton action:[].'.
+	self addSourceButton action:[(ReferenceForm withLinkForm: self )openWithSpec ].
+	
+	self buttonReference whenActivatedDo: [ self addSourceButton enable. action:= #reference].
+	self buttonReference whenDeactivatedDo:  [ self addSourceButton disable  ].
+	
+	self buttonAssumption whenActivatedDo: [ action:= #assumption].
+	self buttonExperience  whenActivatedDo: [ action:= #experience ].
+	self buttonOwn whenActivatedDo: [ action:= #own ].
+	self buttonUnknown whenActivatedDo: [ action:= #unknown ].
 ]
 
 { #category : #initialization }
-LinkForm >> initializeWidgets [
+LinkForm >> initializeRadio [
+	buttonAssumption := self instantiate: RadioButtonPresenter.
+	buttonExperience := self instantiate: RadioButtonPresenter.
+	buttonOwn := self instantiate: RadioButtonPresenter.
+	buttonUnknown := self instantiate: RadioButtonPresenter.
+	buttonReference := self instantiate: RadioButtonPresenter.
+	buttonAssumption label: 'Assumption'.
+	buttonExperience label: 'Experience'.
+	buttonOwn label: 'Own Investigation'.
+	buttonUnknown label: 'Unkonwn'.
+	buttonReference  label: 'Reference'.
+	self setGroup .
 
-	"podtia resolverse con un singleton, y a ese singleton que seria el controlador perirle los elementos q necesito"
+]
+
+{ #category : #initialization }
+LinkForm >> initializeSelect [
 
 	originLabel  := self newLabel  label: 'Select origin:'.
 	destinationLabel  := self newLabel label: 'Select destination:'.
@@ -133,18 +224,28 @@ LinkForm >> initializeWidgets [
 	listOrigin items: factors.
 	listDestination beMultipleSelection .
 	listOrigin items: factors.
+]
+
+{ #category : #initialization }
+LinkForm >> initializeWidgets [
+	"podtia resolverse con un singleton, y a ese singleton que seria el controlador perirle los elementos q necesito"
+
+	self initializeRadio.
+	self initializeSelect .
 	submitButton := self newButton label: 'Submit'.
-	addSourceButton  := self newButton label: 'Add source'.	
+	addSourceButton := self newButton label: 'Add source'.
 	
-	self focusOrder 
-		add: originLabel ;
-		add: listOrigin ; 
-		add: destinationLabel ;
-		add: listDestination ;
-		add: labelLevelDest ;
-		add: labelLevelOri ;
-		add: listDestination ;
-		add: listOrigin .
+	self focusOrder
+		add: originLabel;
+		add: listOrigin;
+		add: buttonAssumption;
+		add: destinationLabel;
+		add: listDestination;
+		add: labelLevelDest;
+		add: labelLevelOri;
+		add: listDestination;
+		add: listOrigin.
+		
 ]
 
 { #category : #accessing }
@@ -153,18 +254,8 @@ LinkForm >> labelLevelDest [
 ]
 
 { #category : #accessing }
-LinkForm >> labelLevelDest: anObject [
-	labelLevelDest := anObject
-]
-
-{ #category : #accessing }
 LinkForm >> labelLevelOri [
 	^ labelLevelOri
-]
-
-{ #category : #accessing }
-LinkForm >> labelLevelOri: anObject [
-	labelLevelOri := anObject
 ]
 
 { #category : #accessing }
@@ -173,28 +264,18 @@ LinkForm >> labelSources [
 ]
 
 { #category : #accessing }
-LinkForm >> labelSources: anObject [
-	labelSources := anObject
-]
-
-{ #category : #accessing }
 LinkForm >> levelDestination [
 	^ levelDestination
 ]
 
 { #category : #accessing }
-LinkForm >> levelDestination: anObject [
-	levelDestination := anObject
+LinkForm >> levelItems [
+	^ levelItems
 ]
 
 { #category : #accessing }
 LinkForm >> levelOrigin [
 	^ levelOrigin
-]
-
-{ #category : #accessing }
-LinkForm >> levelOrigin: anObject [
-	levelOrigin := anObject
 ]
 
 { #category : #accessing }
@@ -212,19 +293,36 @@ LinkForm >> originLabel [
 	^ originLabel
 ]
 
-{ #category : #accessing }
-LinkForm >> originLabel: anObject [
-	originLabel := anObject
+{ #category : #'as yet unclassified' }
+LinkForm >> own [
+	graphic sourceOwn: link
 ]
 
-{ #category : #accessing }
-LinkForm >> sources [
-	^ sources
+{ #category : #'as yet unclassified' }
+LinkForm >> reference [
+	graphic addReferences: references link: link. 
 ]
 
-{ #category : #accessing }
-LinkForm >> sources: anObject [
-	sources := anObject
+{ #category : #initialization }
+LinkForm >> setFocus [
+	
+	self focusOrder
+		add: buttonAssumption;
+		add: buttonExperience;
+		add: buttonOwn;
+		add: buttonUnknown;
+		add: buttonReference .
+]
+
+{ #category : #initialization }
+LinkForm >> setGroup [
+RadioButtonGroupPresenter new
+		addRadioButton: buttonAssumption;
+		addRadioButton: buttonExperience;
+		addRadioButton: buttonOwn;
+		addRadioButton: buttonUnknown;
+		addRadioButton: buttonReference ;
+		default: buttonAssumption .
 ]
 
 { #category : #accessing }
@@ -232,12 +330,12 @@ LinkForm >> submitButton [
 	^ submitButton
 ]
 
-{ #category : #accessing }
-LinkForm >> submitButton: anObject [
-	submitButton := anObject
-]
-
 { #category : #api }
 LinkForm >> title [ 
 	^'New link'
+]
+
+{ #category : #'as yet unclassified' }
+LinkForm >> unknown [
+	graphic sourceUnknown: link
 ]
