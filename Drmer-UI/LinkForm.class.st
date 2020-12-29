@@ -135,9 +135,9 @@ LinkForm >> factors [
 ]
 
 { #category : #accessing }
-LinkForm >> factors: allFactors [
+LinkForm >> factors: allElements [
 	factors:= Dictionary new.
-	allFactors do:[ :factor | factors at:(factor model attribute , ' of ' , factor model element) put: factor].
+	allElements  do:[ :element | factors at: element model asString  put: element].
 	"factors := allFactors collect: [ :factor | (factor attribute , of  , factor element) ]."
 	
 	listOrigin items: factors keys .
@@ -150,7 +150,7 @@ LinkForm >> factors: allFactors [
 LinkForm >> graphic:aGraphic [
 	graphic := aGraphic .
 	"self factors: (graphic factorEllipses collect: [:factor | factor model])"
-	self factors: graphic factorEllipses 
+	self factors: graphic elements 
 ]
 
 { #category : #initialization }
