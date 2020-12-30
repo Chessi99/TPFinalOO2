@@ -5,7 +5,7 @@ Class {
 		'link',
 		'action',
 		'graphic',
-		'factors',
+		'listItems',
 		'listOrigin',
 		'listDestination',
 		'originLabel',
@@ -130,34 +130,17 @@ LinkForm >> experience [
 ]
 
 { #category : #accessing }
-LinkForm >> factors [
-	^ factors
-]
-
-{ #category : #accessing }
-LinkForm >> factors: allElements [
-	factors:= Dictionary new.
-	allElements  do:[ :element | factors at: element model asString  put: element].
-	"factors := allFactors collect: [ :factor | (factor attribute , of  , factor element) ]."
-	
-	listOrigin items: factors keys .
-	listDestination items: factors keys.
-	listOrigin refreshListItems .
-	listDestination  refreshListItems  .
-]
-
-{ #category : #accessing }
 LinkForm >> graphic:aGraphic [
 	graphic := aGraphic .
 	"self factors: (graphic factorEllipses collect: [:factor | factor model])"
-	self factors: graphic elements 
+	self listItems: graphic elements 
 ]
 
 { #category : #initialization }
 LinkForm >> initialize [
 	action:= #assumption.
 	references := OrderedCollection new.
-	factors:=OrderedCollection new .
+	listItems :=OrderedCollection new .
 	levelItems:= OrderedCollection with:1 with:-1  with: 0.
 	super initialize.
 ]
@@ -165,20 +148,10 @@ LinkForm >> initialize [
 { #category : #initialization }
 LinkForm >> initializePresenter [
 	
-	self submitButton action: [ 
-		link:= graphic addLink: (factors at:listOrigin selectedItem) 
-					destination:(factors at: listDestination selectedItem) 
-					levelOrigin:levelOrigin selectedItem 
-					levelDestination:levelDestination selectedItem.
-		self perform: action.
-		graphic drawLink: link
-		].	
-	
+	self initializeSubminButton.	
 	self addSourceButton action:[(ReferenceForm withLinkForm: self )openWithSpec ].
-	
 	self buttonReference whenActivatedDo: [ self addSourceButton enable. action:= #reference].
 	self buttonReference whenDeactivatedDo:  [ self addSourceButton disable  ].
-	
 	self buttonAssumption whenActivatedDo: [ action:= #assumption].
 	self buttonExperience  whenActivatedDo: [ action:= #experience ].
 	self buttonOwn whenActivatedDo: [ action:= #own ].
@@ -221,9 +194,22 @@ LinkForm >> initializeSelect [
 	listOrigin := self newList.
 	listDestination := self newList.
 	listOrigin beMultipleSelection.
-	listOrigin items: factors.
+	listOrigin items: listItems .
 	listDestination beMultipleSelection .
-	listOrigin items: factors.
+	listOrigin items: listItems .
+]
+
+{ #category : #initialization }
+LinkForm >> initializeSubminButton [
+	self submitButton action: [ 
+		link:= graphic addLink: (listItems  at:listOrigin selectedItem) 
+					destination:(listItems  at: listDestination selectedItem) 
+					levelOrigin:levelOrigin selectedItem 
+					levelDestination:levelDestination selectedItem.
+		self perform: action.
+		graphic drawLink: link
+		].	
+
 ]
 
 { #category : #initialization }
@@ -281,6 +267,23 @@ LinkForm >> levelOrigin [
 { #category : #accessing }
 LinkForm >> listDestination [
 	^ listDestination
+]
+
+{ #category : #accessing }
+LinkForm >> listItems [
+	^ listItems
+]
+
+{ #category : #accessing }
+LinkForm >> listItems:allElements [
+	listItems := Dictionary new.
+	allElements  do:[ :element | listItems  at: element model asString  put: element].
+	"factors := allFactors collect: [ :factor | (factor attribute , of  , factor element) ]."
+	
+	listOrigin items: listItems keys .
+	listDestination items: listItems  keys.
+	listOrigin refreshListItems .
+	listDestination  refreshListItems  .
 ]
 
 { #category : #accessing }
