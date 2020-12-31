@@ -133,7 +133,7 @@ LinkForm >> experience [
 LinkForm >> graphic:aGraphic [
 	graphic := aGraphic .
 	"self factors: (graphic factorEllipses collect: [:factor | factor model])"
-	self listItems: graphic elements 
+	self loadListItems.
 ]
 
 { #category : #initialization }
@@ -202,8 +202,8 @@ LinkForm >> initializeSelect [
 { #category : #initialization }
 LinkForm >> initializeSubminButton [
 	self submitButton action: [ 
-		link:= graphic addLink: (listItems  at:listOrigin selectedItem) 
-					destination:(listItems  at: listDestination selectedItem) 
+		link:= graphic addLink: (listOrigin selectedItem) 
+					destination:(listDestination selectedItem) 
 					levelOrigin:levelOrigin selectedItem 
 					levelDestination:levelDestination selectedItem.
 		self perform: action.
@@ -275,20 +275,16 @@ LinkForm >> listItems [
 ]
 
 { #category : #accessing }
-LinkForm >> listItems:allElements [
-	listItems := Dictionary new.
-	allElements  do:[ :element | listItems  at: element model asString  put: element].
-	"factors := allFactors collect: [ :factor | (factor attribute , of  , factor element) ]."
-	
-	listOrigin items: listItems keys .
-	listDestination items: listItems  keys.
-	listOrigin refreshListItems .
-	listDestination  refreshListItems  .
+LinkForm >> listOrigin [
+	^ listOrigin
 ]
 
 { #category : #accessing }
-LinkForm >> listOrigin [
-	^ listOrigin
+LinkForm >> loadListItems [
+	listOrigin items: graphic elements; displayBlock:[:each | each model asString ] .
+	listDestination items:  graphic elements; displayBlock:[:each | each model asString ].
+	listOrigin refreshListItems .
+	listDestination  refreshListItems  .
 ]
 
 { #category : #accessing }
