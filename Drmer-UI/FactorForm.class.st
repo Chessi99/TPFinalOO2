@@ -10,8 +10,7 @@ Class {
 		'isExternaLabel',
 		'isExternalInput',
 		'submitButton',
-		'screen',
-		'factor'
+		'screen'
 	],
 	#category : #'Drmer-UI'
 }

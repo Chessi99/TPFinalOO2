@@ -59,7 +59,7 @@ SupportForm >> initializePresenter [
 { #category : #initialization }
 SupportForm >> initializeWidgets [
 
-	labelDescription  := self newLabel label: 'Description:'.
+	labelDescription  := self newLabel label: 'Description: '.
 	description := self newTextInput autoAccept: true.
 
 	submitButton := self newButton label: 'Submit'.
