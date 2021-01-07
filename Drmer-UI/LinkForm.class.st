@@ -122,18 +122,6 @@ LinkForm >> buttonUnknown [
 	^ buttonUnknown
 ]
 
-{ #category : #initialization }
-LinkForm >> defaultRadio [
- |sources|
-	sources:=(link sources collect: [ :source | source asString  ]) asCommaString.	   
-	sources = '[A]'  ifTrue: [ ^buttonAssumption  ].
-   sources = '[E]'  ifTrue: [ ^buttonExperience ].
-   sources = '[?]'  ifTrue: [ ^buttonUnknown  ].
-   sources = '[O]'  ifTrue: [ ^buttonOwn  ].
-
-   ^buttonReference.
-]
-
 { #category : #accessing }
 LinkForm >> destinationLabel [
 	^ destinationLabel
@@ -200,17 +188,17 @@ LinkForm >> initializeSelect [
 	levelDestination := self newList.	
 	levelOrigin  := self newList.
 	
-	levelDestination  beMultipleSelection.
-	levelOrigin beMultipleSelection .
+	levelDestination  beSingleSelection .
+	levelOrigin beSingleSelection  .
 	
 	levelDestination items: levelItems. 
 	levelOrigin items: levelItems.
 	
 	listOrigin := self newList.
 	listDestination := self newList.
-	listOrigin beMultipleSelection.
+	listOrigin beSingleSelection	.
 	listOrigin items: listItems .
-	listDestination beMultipleSelection .
+	listDestination beSingleSelection  .
 	listOrigin items: listItems .
 ]
 
