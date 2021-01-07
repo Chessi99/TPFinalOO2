@@ -23,7 +23,10 @@ Class {
 		'buttonExperience',
 		'buttonOwn',
 		'buttonUnknown',
-		'buttonReference'
+		'buttonReference',
+		'weight',
+		'labelWeight',
+		'groupRadio'
 	],
 	#category : #'Drmer-UI'
 }
@@ -117,6 +120,18 @@ LinkForm >> buttonReference [
 { #category : #accessing }
 LinkForm >> buttonUnknown [
 	^ buttonUnknown
+]
+
+{ #category : #initialization }
+LinkForm >> defaultRadio [
+ |sources|
+	sources:=(link sources collect: [ :source | source asString  ]) asCommaString.	   
+	sources = '[A]'  ifTrue: [ ^buttonAssumption  ].
+   sources = '[E]'  ifTrue: [ ^buttonExperience ].
+   sources = '[?]'  ifTrue: [ ^buttonUnknown  ].
+   sources = '[O]'  ifTrue: [ ^buttonOwn  ].
+
+   ^buttonReference.
 ]
 
 { #category : #accessing }
@@ -250,6 +265,11 @@ LinkForm >> labelSources [
 ]
 
 { #category : #accessing }
+LinkForm >> labelWeight [
+	^labelWeight 
+]
+
+{ #category : #accessing }
 LinkForm >> levelDestination [
 	^ levelDestination
 ]
@@ -281,8 +301,8 @@ LinkForm >> listOrigin [
 
 { #category : #accessing }
 LinkForm >> loadListItems [
-	listOrigin items: graphic elements; displayBlock:[:each | each model asString ] .
-	listDestination items:  graphic elements; displayBlock:[:each | each model asString ].
+	listOrigin items: graphic elements ; displayBlock:[:each | each  asString ] .
+	listDestination items:  graphic elements; displayBlock:[:each | each  asString ].
 	listOrigin refreshListItems .
 	listDestination  refreshListItems  .
 ]
@@ -315,7 +335,7 @@ LinkForm >> setFocus [
 
 { #category : #initialization }
 LinkForm >> setGroup [
-RadioButtonGroupPresenter new
+groupRadio:=RadioButtonGroupPresenter new
 		addRadioButton: buttonAssumption;
 		addRadioButton: buttonExperience;
 		addRadioButton: buttonOwn;
@@ -337,4 +357,9 @@ LinkForm >> title [
 { #category : #'as yet unclassified' }
 LinkForm >> unknown [
 	graphic sourceUnknown: link
+]
+
+{ #category : #accessing }
+LinkForm >> weight [
+	^ weight
 ]
