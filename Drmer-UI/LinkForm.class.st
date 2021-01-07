@@ -307,7 +307,7 @@ LinkForm >> own [
 
 { #category : #'as yet unclassified' }
 LinkForm >> reference [
-	graphic addReferences: references link: link. 
+	graphic references: references link: link. 
 ]
 
 { #category : #initialization }

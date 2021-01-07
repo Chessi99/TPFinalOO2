@@ -22,15 +22,33 @@ ModifiedLinkForm >> defaultRadio [
 ]
 
 { #category : #initialization }
+ModifiedLinkForm >> initializeSubminButton [
+	self submitButton
+		action: [ graphic
+				updateLink: link
+				levelDestination: levelDestination selectedItem
+				levelOrigin: levelOrigin selectedItem
+				origin: listOrigin selectedItem
+				destination: listDestination selectedItem.
+			self perform: action.
+			graphic reDrawLink: link ]
+]
+
+{ #category : #initialization }
 ModifiedLinkForm >> initializeValues [
 	groupRadio default: self defaultRadio.
-	listOrigin setSelectedItem: link origin.
-	listDestination setSelectedItem: link destination.
-	levelDestination setSelectedItem: link levelAtDestination.
+
 ]
 
 { #category : #accessing }
 ModifiedLinkForm >> link:aLink [
 	link:=aLink.
 	self initializeValues
+]
+
+{ #category : #'as yet unclassified' }
+ModifiedLinkForm >> reference [
+
+	(link sources size > 1 )ifTrue:[graphic addReferences: references link: link. ^self].
+	graphic references: references link: link. 
 ]
