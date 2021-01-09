@@ -24,7 +24,7 @@ Class {
 		'buttonOwn',
 		'buttonUnknown',
 		'buttonReference',
-		'weight',
+		'inputWeight',
 		'labelWeight',
 		'groupRadio'
 	],
@@ -39,7 +39,10 @@ LinkForm class >> create: graphic [
 
 { #category : #specs }
 LinkForm class >> defaultSpec [
-	
+	|labelsWidth fontWidth rowHeight|
+	fontWidth := StandardFonts defaultFont widthOfString: 'M'.
+	labelsWidth := fontWidth * 5.
+	rowHeight := self inputTextHeight.
 	^ SpecLayout  composed
 		newColumn: [ :c |
 			c
@@ -71,6 +74,10 @@ LinkForm class >> defaultSpec [
 				row add: #buttonUnknown.
 				row add: #buttonReference ]
 			height: 40.
+			c newRow: [ :row |
+					row add: #labelWeight right: labelsWidth.
+					row add: #inputWeight .
+				]height: rowHeight .
 			c
 			newRow: [:row |
 				row add: #addSourceButton .
@@ -149,6 +156,21 @@ LinkForm >> initialize [
 ]
 
 { #category : #initialization }
+LinkForm >> initializeFocusOrder [
+	self focusOrder
+		add: originLabel;
+		add: listOrigin;
+		add: buttonAssumption;
+		add: destinationLabel;
+		add: listDestination;
+		add: labelLevelDest;
+		add: labelLevelOri;
+		add: listDestination;
+		add: listOrigin;
+		add: labelWeight
+]
+
+{ #category : #initialization }
 LinkForm >> initializePresenter [
 	
 	self initializeSubminButton.	
@@ -208,7 +230,8 @@ LinkForm >> initializeSubminButton [
 		link:= graphic addLink: (listOrigin selectedItem) 
 					destination:(listDestination selectedItem) 
 					levelOrigin:levelOrigin selectedItem 
-					levelDestination:levelDestination selectedItem.
+					levelDestination:levelDestination selectedItem
+					weight: self weightInput .
 		self perform: action.
 		graphic drawLink: link
 		].	
@@ -221,20 +244,24 @@ LinkForm >> initializeWidgets [
 
 	self initializeRadio.
 	self initializeSelect .
+	labelWeight := self newLabel label: 'Weight:'.
+	inputWeight := self newTextInput autoAccept: true.
+	inputWeight text: 1.
 	submitButton := self newButton label: 'Submit'.
 	addSourceButton := self newButton label: 'Add source'.
 	
-	self focusOrder
-		add: originLabel;
-		add: listOrigin;
-		add: buttonAssumption;
-		add: destinationLabel;
-		add: listDestination;
-		add: labelLevelDest;
-		add: labelLevelOri;
-		add: listDestination;
-		add: listOrigin.
+	self initializeFocusOrder.
 		
+]
+
+{ #category : #accessing }
+LinkForm >> inputWeight [
+	^ inputWeight
+]
+
+{ #category : #accessing }
+LinkForm >> inputWeight: anObject [
+	inputWeight := anObject
 ]
 
 { #category : #accessing }
@@ -347,7 +374,9 @@ LinkForm >> unknown [
 	graphic sourceUnknown: link
 ]
 
-{ #category : #accessing }
-LinkForm >> weight [
-	^ weight
+{ #category : #initialization }
+LinkForm >> weightInput [
+	(inputWeight text == '') 
+	ifTrue: [ ^1 ].
+	^(inputWeight text)asInteger
 ]

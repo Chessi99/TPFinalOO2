@@ -29,7 +29,8 @@ ModifiedLinkForm >> initializeSubminButton [
 				levelDestination: levelDestination selectedItem
 				levelOrigin: levelOrigin selectedItem
 				origin: listOrigin selectedItem
-				destination: listDestination selectedItem.
+				destination: listDestination selectedItem
+				weight:inputWeight text.
 			self perform: action.
 			graphic reDrawLink: link ]
 ]
@@ -37,6 +38,7 @@ ModifiedLinkForm >> initializeSubminButton [
 { #category : #initialization }
 ModifiedLinkForm >> initializeValues [
 	groupRadio default: self defaultRadio.
+	inputWeight text: link weight .
 
 ]
 
