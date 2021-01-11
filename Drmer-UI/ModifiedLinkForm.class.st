@@ -30,7 +30,7 @@ ModifiedLinkForm >> initializeSubminButton [
 				levelOrigin: levelOrigin selectedItem
 				origin: listOrigin selectedItem
 				destination: listDestination selectedItem
-				weight:inputWeight text.
+				weight:inputWeight text asInteger .
 			self perform: action.
 			graphic reDrawLink: link ]
 ]

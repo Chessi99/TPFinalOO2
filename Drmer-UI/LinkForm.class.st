@@ -50,18 +50,18 @@ LinkForm class >> defaultSpec [
 				row
 				newColumn: [ :column | 
 							column add: #originLabel height: self inputTextHeight.
-							column add: #listOrigin height: 130.
+							column add: #listOrigin height: 110.
 							column add: #labelLevelOri height: self inputTextHeight.
-							column add: #levelOrigin height: 50.
+							column add: #levelOrigin height: 55.
 							
 							
 				].
 				row		
 					newColumn: [ :column | 
 							column add: #destinationLabel height: self inputTextHeight.
-							column add: #listDestination height: 130.
+							column add: #listDestination height: 110.
 							column add: #labelLevelDest height: self inputTextHeight.
-							column add: #levelDestination height: 50.
+							column add: #levelDestination height: 55.
 							
 							];
 						yourself.
@@ -201,27 +201,22 @@ LinkForm >> initializeRadio [
 
 { #category : #initialization }
 LinkForm >> initializeSelect [
-
-	originLabel  := self newLabel  label: 'Select origin:'.
-	destinationLabel  := self newLabel label: 'Select destination:'.
-	labelLevelOri   := self newLabel label: 'Level at origin:'.
-	labelLevelDest   := self newLabel label: 'Level at destination:'.
-	
-	levelDestination := self newList.	
-	levelOrigin  := self newList.
-	
-	levelDestination  beSingleSelection .
-	levelOrigin beSingleSelection  .
-	
-	levelDestination items: levelItems. 
+	originLabel := self newLabel label: 'Select origin:'.
+	destinationLabel := self newLabel label: 'Select destination:'.
+	labelLevelOri := self newLabel label: 'Level at origin:'.
+	labelLevelDest := self newLabel label: 'Level at destination:'.
+	levelDestination := self newList.
+	levelOrigin := self newList.
+	levelDestination beSingleSelection.
+	levelOrigin beSingleSelection.
+	levelDestination items: levelItems.
 	levelOrigin items: levelItems.
-	
 	listOrigin := self newList.
 	listDestination := self newList.
-	listOrigin beSingleSelection	.
-	listOrigin items: listItems .
-	listDestination beSingleSelection  .
-	listOrigin items: listItems .
+	listOrigin beSingleSelection.
+	listOrigin items: listItems.
+	listDestination beSingleSelection.
+	listOrigin items: listItems
 ]
 
 { #category : #initialization }
@@ -240,18 +235,15 @@ LinkForm >> initializeSubminButton [
 
 { #category : #initialization }
 LinkForm >> initializeWidgets [
-	"podtia resolverse con un singleton, y a ese singleton que seria el controlador perirle los elementos q necesito"
 
 	self initializeRadio.
-	self initializeSelect .
+	self initializeSelect.
 	labelWeight := self newLabel label: 'Weight:'.
 	inputWeight := self newTextInput autoAccept: true.
 	inputWeight text: 1.
 	submitButton := self newButton label: 'Submit'.
 	addSourceButton := self newButton label: 'Add source'.
-	
-	self initializeFocusOrder.
-		
+	self initializeFocusOrder
 ]
 
 { #category : #accessing }
