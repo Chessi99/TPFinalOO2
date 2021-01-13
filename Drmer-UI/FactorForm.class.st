@@ -110,24 +110,9 @@ FactorForm >> initializePresenter [
 
 { #category : #initialization }
 FactorForm >> initializeWidgets [
-
-	attributeLabel  := self newLabel label: 'attribute:'.
-	attributeTextInput := self newTextInput autoAccept: true.
-
-	elementLabel := self newLabel label: 'element:'.
-	elementTextInput := self newTextInput autoAccept: true.
-	elementTextInput ghostText: 'empty'.
-	
-	isExternaLabel := self newLabel label: 'isExternal'.
-	isExternalInput := self newCheckBox state: false.
-
+	self setFormFactor.
 	submitButton := self newButton label: 'Submit'.
-	
-	self focusOrder 
-		add: attributeTextInput;
-		add: elementTextInput;
-		add: isExternalInput.
-		
+	self setFocus
 ]
 
 { #category : #accessing }
@@ -148,6 +133,25 @@ FactorForm >> isExternalInput [
 { #category : #accessing }
 FactorForm >> isExternalInput: anObject [
 	isExternalInput := anObject
+]
+
+{ #category : #initialization }
+FactorForm >> setFocus [
+	self focusOrder
+		add: attributeTextInput;
+		add: elementTextInput;
+		add: isExternalInput
+]
+
+{ #category : #initialization }
+FactorForm >> setFormFactor [
+	attributeLabel := self newLabel label: 'attribute:'.
+	attributeTextInput := self newTextInput autoAccept: true.
+	elementLabel := self newLabel label: 'element:'.
+	elementTextInput := self newTextInput autoAccept: true.
+	elementTextInput ghostText: 'empty'.
+	isExternaLabel := self newLabel label: 'isExternal'.
+	isExternalInput := self newCheckBox state: false
 ]
 
 { #category : #accessing }
