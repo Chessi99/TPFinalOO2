@@ -1,6 +1,6 @@
 Class {
 	#name : #LinkForm,
-	#superclass : #ComposablePresenter,
+	#superclass : #ComposableModel,
 	#instVars : [
 		'link',
 		'action',
