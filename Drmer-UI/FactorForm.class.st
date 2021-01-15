@@ -34,7 +34,7 @@ FactorForm class >> defaultSpec [
 				newRow: [ :row | 
 					row add: #attributeLabel right: labelsWidth.
 					row add: #attributeTextInput ]
-				height: rowHeight .
+				height: rowHeight.
 			col
 				newRow: [ :row | 
 					row add: #elementLabel right: labelsWidth.
@@ -46,14 +46,11 @@ FactorForm class >> defaultSpec [
 					row add: #isExternaLabel ]
 				height: rowHeight * 3.
 			col
-				newRow: [ :row | row add: #submitButton ] 
-				height: rowHeight * 1.3.
-			
-			
-		]
-		origin: 0 @ 0.12 corner: 1 @ 0.9;	
-		
-	yourself
+				newRow: [ :row | row add: #submitButton ]
+				height: rowHeight * 1.3 ]
+			origin: 0 @ 0.12
+			corner: 1 @ 0.9;
+		yourself
 ]
 
 { #category : #accessing }

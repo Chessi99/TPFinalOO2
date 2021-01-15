@@ -54,11 +54,6 @@ ReferenceForm >> citation [
 	
 ]
 
-{ #category : #accessing }
-ReferenceForm >> citation: anObject [
-	citation := anObject
-]
-
 { #category : #initialization }
 ReferenceForm >> initializePresenter [ 
 
@@ -70,9 +65,7 @@ ReferenceForm >> initializeWidgets [
 	
 	citation:= self newTextInput text:'';autoAccept: true.
 	label:= self newTextInput text: '';autoAccept: true. 
-	
 	submitButton := self newButton label: 'Submit'.
-	
 	labelCitation:=self newLabel label: 'Citation:'.
 	labelApp:= self newLabel label: 'Label'.
 	

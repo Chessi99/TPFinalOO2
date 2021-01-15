@@ -171,6 +171,19 @@ LinkForm >> initializeFocusOrder [
 ]
 
 { #category : #initialization }
+LinkForm >> initializeLists [
+
+	levelDestination := self newList.
+	levelOrigin := self newList.
+	levelDestination beSingleSelection;items: levelItems.
+	levelOrigin beSingleSelection;items: levelItems.
+	listOrigin := self newList.
+	listDestination := self newList.
+	listOrigin beSingleSelection; items: listItems.
+	listDestination beSingleSelection;items: listItems
+]
+
+{ #category : #initialization }
 LinkForm >> initializePresenter [
 	
 	self initializeSubminButton.	
@@ -201,22 +214,11 @@ LinkForm >> initializeRadio [
 
 { #category : #initialization }
 LinkForm >> initializeSelect [
+	self initializeLists.
 	originLabel := self newLabel label: 'Select origin:'.
 	destinationLabel := self newLabel label: 'Select destination:'.
 	labelLevelOri := self newLabel label: 'Level at origin:'.
 	labelLevelDest := self newLabel label: 'Level at destination:'.
-	levelDestination := self newList.
-	levelOrigin := self newList.
-	levelDestination beSingleSelection.
-	levelOrigin beSingleSelection.
-	levelDestination items: levelItems.
-	levelOrigin items: levelItems.
-	listOrigin := self newList.
-	listDestination := self newList.
-	listOrigin beSingleSelection.
-	listOrigin items: listItems.
-	listDestination beSingleSelection.
-	listOrigin items: listItems
 ]
 
 { #category : #initialization }
@@ -235,7 +237,6 @@ LinkForm >> initializeSubminButton [
 
 { #category : #initialization }
 LinkForm >> initializeWidgets [
-
 	self initializeRadio.
 	self initializeSelect.
 	labelWeight := self newLabel label: 'Weight:'.
@@ -249,11 +250,6 @@ LinkForm >> initializeWidgets [
 { #category : #accessing }
 LinkForm >> inputWeight [
 	^ inputWeight
-]
-
-{ #category : #accessing }
-LinkForm >> inputWeight: anObject [
-	inputWeight := anObject
 ]
 
 { #category : #accessing }
