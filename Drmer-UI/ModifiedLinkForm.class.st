@@ -48,7 +48,7 @@ ModifiedLinkForm >> link:aLink [
 	self initializeValues
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sending }
 ModifiedLinkForm >> reference [
 
 	(link sources size > 1 )ifTrue:[graphic addReferences: references link: link. ^self].

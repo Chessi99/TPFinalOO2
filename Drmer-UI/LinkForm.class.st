@@ -99,7 +99,7 @@ LinkForm >> addSourceButton [
 	^ addSourceButton
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sending }
 LinkForm >> assumption [
 	graphic sourceAssumption: link
 ]
@@ -134,7 +134,7 @@ LinkForm >> destinationLabel [
 	^ destinationLabel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sending }
 LinkForm >> experience [
 	graphic sourceExperience: link
 ]
@@ -319,12 +319,12 @@ LinkForm >> originLabel [
 	^ originLabel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sending }
 LinkForm >> own [
 	graphic sourceOwn: link
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sending }
 LinkForm >> reference [
 	graphic references: references link: link. 
 ]
@@ -361,7 +361,7 @@ LinkForm >> title [
 	^'New link'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sending }
 LinkForm >> unknown [
 	graphic sourceUnknown: link
 ]

@@ -24,7 +24,7 @@ ModifiedFactorForm >> initializePresenter [
 		].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 ModifiedFactorForm >> loadInputs [
 	attributeTextInput text: factor attribute.
 	elementTextInput text: factor element.
