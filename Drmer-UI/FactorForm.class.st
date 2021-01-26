@@ -59,18 +59,8 @@ FactorForm >> attributeLabel [
 ]
 
 { #category : #accessing }
-FactorForm >> attributeLabel: anObject [
-	attributeLabel := anObject
-]
-
-{ #category : #accessing }
 FactorForm >> attributeTextInput [
 	^ attributeTextInput
-]
-
-{ #category : #accessing }
-FactorForm >> attributeTextInput: anObject [
-	attributeTextInput := anObject
 ]
 
 { #category : #accessing }
@@ -79,18 +69,8 @@ FactorForm >> elementLabel [
 ]
 
 { #category : #accessing }
-FactorForm >> elementLabel: anObject [
-	elementLabel := anObject
-]
-
-{ #category : #accessing }
 FactorForm >> elementTextInput [
 	^ elementTextInput
-]
-
-{ #category : #accessing }
-FactorForm >> elementTextInput: anObject [
-	elementTextInput := anObject
 ]
 
 { #category : #accessing }
@@ -118,18 +98,8 @@ FactorForm >> isExternaLabel [
 ]
 
 { #category : #accessing }
-FactorForm >> isExternaLabel: anObject [
-	isExternaLabel := anObject
-]
-
-{ #category : #accessing }
 FactorForm >> isExternalInput [
 	^ isExternalInput
-]
-
-{ #category : #accessing }
-FactorForm >> isExternalInput: anObject [
-	isExternalInput := anObject
 ]
 
 { #category : #initialization }
@@ -154,9 +124,4 @@ FactorForm >> setFormFactor [
 { #category : #accessing }
 FactorForm >> submitButton [
 	^ submitButton
-]
-
-{ #category : #accessing }
-FactorForm >> submitButton: anObject [
-	submitButton := anObject
 ]
