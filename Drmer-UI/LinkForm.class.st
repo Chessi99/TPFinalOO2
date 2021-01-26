@@ -10,12 +10,12 @@ Class {
 		'listDestination',
 		'originLabel',
 		'destinationLabel',
-		'labelLevelDest',
-		'labelLevelOri',
+		'levelDestinationLabel',
+		'levelOriginLabel',
 		'levelOrigin',
 		'levelDestination',
 		'levelItems',
-		'labelSources',
+		'sourcesLabel',
 		'references',
 		'submitButton',
 		'addSourceButton',
@@ -51,7 +51,7 @@ LinkForm class >> defaultSpec [
 				newColumn: [ :column | 
 							column add: #originLabel height: self inputTextHeight.
 							column add: #listOrigin height: 110.
-							column add: #labelLevelOri height: self inputTextHeight.
+							column add: #levelOriginLabel height: self inputTextHeight.
 							column add: #levelOrigin height: 55.
 							
 							
@@ -163,8 +163,8 @@ LinkForm >> initializeFocusOrder [
 		add: buttonAssumption;
 		add: destinationLabel;
 		add: listDestination;
-		add: labelLevelDest;
-		add: labelLevelOri;
+		add: levelDestinationLabel;
+		add: levelOriginLabel;
 		add: listDestination;
 		add: listOrigin;
 		add: labelWeight
@@ -217,8 +217,8 @@ LinkForm >> initializeSelect [
 	self initializeLists.
 	originLabel := self newLabel label: 'Select origin:'.
 	destinationLabel := self newLabel label: 'Select destination:'.
-	labelLevelOri := self newLabel label: 'Level at origin:'.
-	labelLevelDest := self newLabel label: 'Level at destination:'.
+	levelOriginLabel := self newLabel label: 'Level at origin:'.
+	levelDestinationLabel := self newLabel label: 'Level at destination:'.
 ]
 
 { #category : #initialization }
@@ -254,17 +254,7 @@ LinkForm >> inputWeight [
 
 { #category : #accessing }
 LinkForm >> labelLevelDest [
-	^ labelLevelDest
-]
-
-{ #category : #accessing }
-LinkForm >> labelLevelOri [
-	^ labelLevelOri
-]
-
-{ #category : #accessing }
-LinkForm >> labelSources [
-	^ labelSources
+	^ levelDestinationLabel
 ]
 
 { #category : #accessing }
@@ -285,6 +275,11 @@ LinkForm >> levelItems [
 { #category : #accessing }
 LinkForm >> levelOrigin [
 	^ levelOrigin
+]
+
+{ #category : #accessing }
+LinkForm >> levelOriginLabel [
+	^ levelOriginLabel 
 ]
 
 { #category : #accessing }
@@ -345,6 +340,11 @@ groupRadio:=RadioButtonGroupPresenter new
 		addRadioButton: buttonUnknown;
 		addRadioButton: buttonReference ;
 		default: buttonAssumption .
+]
+
+{ #category : #accessing }
+LinkForm >> sourcesLabel [
+	^ sourcesLabel 
 ]
 
 { #category : #accessing }

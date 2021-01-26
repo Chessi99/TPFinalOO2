@@ -3,9 +3,9 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'description',
-		'labelDescription',
 		'submitButton',
-		'graphic'
+		'graphic',
+		'descriptionLabel'
 	],
 	#category : #'Drmer-UI'
 }
@@ -26,7 +26,7 @@ SupportForm class >> defaultSpec [
 		newColumn: [ :col | 
 			col
 				newRow: [ :row | 
-					row add: #labelDescription  right: labelsWidth.
+					row add: #descriptionLabel  right: labelsWidth.
 					row add: #description  ]
 				height: rowHeight .
 			col
@@ -46,6 +46,11 @@ SupportForm >> description [
 ]
 
 { #category : #accessing }
+SupportForm >> descriptionLabel [
+	^ descriptionLabel
+]
+
+{ #category : #accessing }
 SupportForm >> graphic: anObject [
 	graphic := anObject
 ]
@@ -58,17 +63,12 @@ SupportForm >> initializePresenter [
 
 { #category : #initialization }
 SupportForm >> initializeWidgets [
-	labelDescription := self newLabel label: 'Description: '.
+	descriptionLabel := self newLabel label: 'Description: '.
 	description := self newTextInput autoAccept: true.
 	submitButton := self newButton label: 'Submit'.
 	self focusOrder
-		add: labelDescription;
+		add: descriptionLabel;
 		add: submitButton
-]
-
-{ #category : #accessing }
-SupportForm >> labelDescription [
-	^ labelDescription
 ]
 
 { #category : #accessing }

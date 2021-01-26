@@ -5,9 +5,9 @@ Class {
 		'citation',
 		'label',
 		'linkForm',
-		'labelCitation',
 		'labelApp',
-		'submitButton'
+		'submitButton',
+		'citationLabel'
 	],
 	#category : #'Drmer-UI'
 }
@@ -23,7 +23,7 @@ ReferenceForm class >> defaultSpec [
 		newColumn: [ :col | 
 			col
 				newRow: [ :row | 
-					row add: #labelCitation right: labelsWidth.
+					row add: #citationLabel right: labelsWidth.
 					row add: #citation]
 				height: rowHeight .
 			col
@@ -54,6 +54,11 @@ ReferenceForm >> citation [
 	
 ]
 
+{ #category : #accessing }
+ReferenceForm >> citationLabel [
+	^ citationLabel
+]
+
 { #category : #initialization }
 ReferenceForm >> initializePresenter [ 
 
@@ -66,7 +71,7 @@ ReferenceForm >> initializeWidgets [
 	citation:= self newTextInput text:'';autoAccept: true.
 	label:= self newTextInput text: '';autoAccept: true. 
 	submitButton := self newButton label: 'Submit'.
-	labelCitation:=self newLabel label: 'Citation:'.
+	citationLabel:=self newLabel label: 'Citation:'.
 	labelApp:= self newLabel label: 'Label'.
 	
 ]
@@ -79,11 +84,6 @@ ReferenceForm >> label [
 { #category : #accessing }
 ReferenceForm >> labelApp [
 	^ labelApp
-]
-
-{ #category : #accessing }
-ReferenceForm >> labelCitation [
-	^ labelCitation
 ]
 
 { #category : #accessing }
