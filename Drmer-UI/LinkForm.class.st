@@ -213,6 +213,11 @@ LinkForm >> initializeRadio [
 ]
 
 { #category : #initialization }
+LinkForm >> initializeReferences [
+	references := OrderedCollection new.
+]
+
+{ #category : #initialization }
 LinkForm >> initializeSelect [
 	self initializeLists.
 	originLabel := self newLabel label: 'Select origin:'.
@@ -229,8 +234,9 @@ LinkForm >> initializeSubminButton [
 					levelOrigin:levelOrigin selectedItem 
 					levelDestination:levelDestination selectedItem
 					weight: self weightInput .
-		self perform: action.
+		self perform: action;initializeReferences .
 		graphic drawLink: link
+		
 		].	
 
 ]
@@ -243,7 +249,7 @@ LinkForm >> initializeWidgets [
 	inputWeight := self newTextInput autoAccept: true.
 	inputWeight text: 1.
 	submitButton := self newButton label: 'Submit'.
-	addSourceButton := self newButton label: 'Add source'.
+	addSourceButton := self newButton label: 'Add reference'.
 	self initializeFocusOrder
 ]
 
