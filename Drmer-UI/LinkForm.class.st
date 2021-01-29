@@ -149,7 +149,7 @@ LinkForm >> graphic:aGraphic [
 { #category : #initialization }
 LinkForm >> initialize [
 	action:= #assumption.
-	references := OrderedCollection new.
+	self initializeReferences.
 	listItems :=OrderedCollection new .
 	levelItems:= OrderedCollection with:1 with:-1  with: 0.
 	super initialize.
@@ -229,14 +229,9 @@ LinkForm >> initializeSelect [
 { #category : #initialization }
 LinkForm >> initializeSubminButton [
 	self submitButton action: [ 
-		link:= graphic addLink: (listOrigin selectedItem) 
-					destination:(listDestination selectedItem) 
-					levelOrigin:levelOrigin selectedItem 
-					levelDestination:levelDestination selectedItem
-					weight: self weightInput .
+		self sendLinkToGraphic.
 		self perform: action;initializeReferences .
-		graphic drawLink: link
-		
+		self sendDrawLink.
 		].	
 
 ]
@@ -324,6 +319,29 @@ LinkForm >> own [
 { #category : #sending }
 LinkForm >> reference [
 	graphic references: references link: link. 
+]
+
+{ #category : #initialization }
+LinkForm >> sendDrawLink [
+graphic drawLink: link
+]
+
+{ #category : #sending }
+LinkForm >> sendLink [
+link:= graphic addLink: (listOrigin selectedItem) 
+					destination:(listDestination selectedItem) 
+					levelOrigin:levelOrigin selectedItem 
+					levelDestination:levelDestination selectedItem
+					weight: self weightInput .
+]
+
+{ #category : #sending }
+LinkForm >> sendLinkToGraphic [
+link:= graphic addLink: (listOrigin selectedItem) 
+					destination:(listDestination selectedItem) 
+					levelOrigin:levelOrigin selectedItem 
+					levelDestination:levelDestination selectedItem
+					weight: self weightInput .
 ]
 
 { #category : #initialization }

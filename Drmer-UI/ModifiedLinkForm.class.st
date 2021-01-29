@@ -22,20 +22,6 @@ ModifiedLinkForm >> defaultRadio [
 ]
 
 { #category : #initialization }
-ModifiedLinkForm >> initializeSubminButton [
-	self submitButton
-		action: [ graphic
-				updateLink: link
-				levelDestination: levelDestination selectedItem
-				levelOrigin: levelOrigin selectedItem
-				origin: listOrigin selectedItem
-				destination: listDestination selectedItem
-				weight:inputWeight text asInteger .
-			self perform: action;initializeReferences .
-			graphic reDrawLink: link ]
-]
-
-{ #category : #initialization }
 ModifiedLinkForm >> initializeValues [
 	groupRadio default: self defaultRadio.
 	inputWeight text: link weight .
@@ -53,4 +39,20 @@ ModifiedLinkForm >> reference [
 
 	(link sources size > 1 )ifTrue:[graphic addReferences: references link: link. ^self].
 	graphic references: references link: link. 
+]
+
+{ #category : #initialization }
+ModifiedLinkForm >> sendDrawLink [
+	graphic reDrawLink: link
+]
+
+{ #category : #'as yet unclassified' }
+ModifiedLinkForm >> sendLinkToGraphic [
+	graphic
+		updateLink: link
+		levelDestination: levelDestination selectedItem
+		levelOrigin: levelOrigin selectedItem
+		origin: listOrigin selectedItem
+		destination: listDestination selectedItem
+		weight: inputWeight text asInteger
 ]
